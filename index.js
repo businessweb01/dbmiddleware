@@ -1,4 +1,19 @@
 import { rtdb, ref, onChildChanged, onValue, remove } from './firebaseconfig.js';
+import express from 'express';
+
+// ✅ Add HTTP server for Render health checks
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Simple health check endpoint
+app.get('/', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
+// Start HTTP server
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🌐 HTTP server running on port ${PORT}`);
+});
 
 console.log('🔥 Service started. Monitoring Firebase bookings…');
 
