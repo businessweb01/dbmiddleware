@@ -98,12 +98,12 @@ async function processBookingWithRetry(booking, firebaseKey, maxRetries = 3) {
     } catch (error) {
       console.error(`❌ Attempt ${attempt}/${maxRetries} failed for ${booking.bookingId}: ${error.message}`);
       
-      if (attempt === maxRetries) {
-        console.error(`💥 Final attempt failed for ${booking.bookingId}, giving up`);
+        if (attempt === maxRetries) {
+        console.error(`⏭️ Skipping ${booking.bookingId}`);
         processedBookings.delete(booking.bookingId); // Allow future retry
         errorCount++;
         return;
-      }
+        }
       
       // Exponential backoff: 2s, 4s, 8s
       const delay = Math.pow(2, attempt) * 1000;
