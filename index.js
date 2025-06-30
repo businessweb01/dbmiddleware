@@ -1,4 +1,4 @@
-import { rtdb, ref, onChildChanged, onValue, remove, onDisconnect, serverTimestamp, set } from './firebaseconfig.js';
+import { rtdb, ref, onChildChanged, onValue, remove } from './firebaseconfig.js';
 import express from 'express';
 
 const app = express();
@@ -204,18 +204,6 @@ async function initializeFirebaseConnection() {
     connectionStatus = 'connecting';
     
     const bookingsRef = ref(rtdb, 'Bookings');
-    const presenceRef = ref(rtdb, `workers/${WORKER_ID}`);
-    
-    // Set up presence system
-    await set(presenceRef, {
-      status: 'online',
-      started_at: START_TIME,
-      last_seen: serverTimestamp(),
-      processed_count: totalProcessed
-    });
-    
-    // Clean up on disconnect
-    onDisconnect(presenceRef).remove();
     
     console.log('👀 Setting up Firebase listeners...');
     
@@ -276,22 +264,6 @@ async function initializeFirebaseConnection() {
         errorCount++;
       }
     }, { onlyOnce: true });
-    
-    // Update presence every minute
-    setInterval(async () => {
-      if (!isShuttingDown && connectionStatus === 'connected') {
-        try {
-          await set(presenceRef, {
-            status: 'online',
-            started_at: START_TIME,
-            last_seen: serverTimestamp(),
-            processed_count: totalProcessed
-          });
-        } catch (error) {
-          console.error('Failed to update presence:', error.message);
-        }
-      }
-    }, 60000);
     
   } catch (error) {
     console.error(`🔥 Firebase initialization failed:`, error);
