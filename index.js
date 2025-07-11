@@ -138,6 +138,8 @@ async function processBooking(booking, firebaseKey) {
       },
       body: JSON.stringify({
         assignedRider: booking.assignedRider || null,
+        riderName: booking.riderName || null,
+        bookingMode: booking.bookingMode || null,
         auto_cancel_at: booking.auto_cancel_at || null,
         booked_at: booking.booked_at || null,
         booked_at_timestamp: booking.booked_at_timestamp || null,
