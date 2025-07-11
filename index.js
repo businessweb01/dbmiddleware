@@ -138,8 +138,6 @@ async function processBooking(booking, firebaseKey) {
       },
       body: JSON.stringify({
         assignedRider: booking.assignedRider || null,
-        riderName: booking.riderName || null,
-        bookingMode: booking.bookingMode || null,
         auto_cancel_at: booking.auto_cancel_at || null,
         booked_at: booking.booked_at || null,
         booked_at_timestamp: booking.booked_at_timestamp || null,
@@ -152,11 +150,9 @@ async function processBooking(booking, firebaseKey) {
         luggageCount: booking.luggageCount || 0,
         numberofPassengers: booking.numberofPassengers || "1",
         passengerId: booking.passengerId || null,
-        passengerName: booking.passengerName || null,
         paymentMethod: booking.paymentMethod || "Cash",
         pickupCoordinates: booking.pickupCoordinates || null,
         ratings: booking.ratings || null,
-        phone_no: booking.phone_no || null,
         // Metadata
         processed_at: new Date().toISOString(),
         worker_id: WORKER_ID
