@@ -153,6 +153,7 @@ async function processBooking(booking, firebaseKey) {
         paymentMethod: booking.paymentMethod || "Cash",
         pickupCoordinates: booking.pickupCoordinates || null,
         ratings: booking.ratings || null,
+        bookingMode: booking.bookingMode || 1,
         // Metadata
         processed_at: new Date().toISOString(),
         worker_id: WORKER_ID
